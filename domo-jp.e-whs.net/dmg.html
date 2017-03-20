@@ -1,0 +1,278 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<title>飛天オンライン・データベース</title>
+<style TYPE="text/css">
+<!--
+body,td{ font: 82% monospace; }
+body{ overflow-x:hidden; }
+A:link { text-decoration: none; color: blue; }
+A:visited { text-decoration: none; color: blue; }
+A:active { text-decoration: none; color: red; }
+A:hover { text-decoration: underline; color: red; }
+-->
+</style>
+</head>
+<body bgcolor=#FFFFFF>
+<br><br><br>
+
+ <table border=1 bordercolor=#000000 align=center cellpadding=4 cellspacing=0 width=600>
+
+ <tr><td>
+
+ 通常攻撃のダメージ計算式は、以下の式を用いて算出されます。<br><br>
+
+ <table border=1 bordercolor=#000000 align=center cellpadding=4 cellspacing=0 width=100% bgcolor=#EEEEEE><tr><td>
+
+ 最終ダメージ＝(Physical Attack－Physical Defence)×補正(A)×補正(B)
+
+ </td></tr></table>
+
+ </td></tr>
+
+ <tr><td>
+
+ 補正(A)とは、基本ダメージにかかる補正値です。<br><br>
+
+ <table border=1 bordercolor=#000000 align=center cellpadding=4 cellspacing=0 width=100% bgcolor=#EEEEEE><tr><td>
+
+ 補正(A)＝増加率(%)×属性(%)×通常補正(%)
+
+ </td></tr></table><br>
+
+ 増加率は、通常ダメージ増加率の合計になります。<br>
+
+ 属性は弱点属性の時は、キャラクターの属性＋(対象の属性÷2)になります。(最大100%)<br>
+
+ 抵抗属性の時は、100－[キャラクターの属性＋(対象の属性÷2)]になります。(最小20%)<br>
+
+ ただし妖魔の属性は基本的に1で、自分に複数属性がある場合は最も高い属性(黒字表示)になります。<br>
+
+ 通常補正とは、物理反撃や会心率による補正値です。<br>
+
+ 物理反撃とは、一定確率で通常ダメージを半減する確率です。<br>
+
+ 妖魔ごとに設定されており、レベル差によっても増減します。<br>
+
+ 会心率とは、上記の物理反撃が発動しなかった際に、ダメージが倍加する確率です。<br>
+
+ すなわち、物理反撃率が高い妖魔には、会心率が確率通りに発揮できません。
+
+ </td></tr>
+
+ <tr><td>
+
+ 補正(B)とは、基本ダメージにかかる補正値です。<br><br>
+
+ <table border=1 bordercolor=#000000 align=center cellpadding=4 cellspacing=0 width=100% bgcolor=#EEEEEE><tr><td>
+
+ 補正(B)＝職業増加率(%)×敵レベル差補正(%)×決闘補正
+
+ </td></tr></table><br>
+
+ 職業増加率は、玄石・称号による職業ダメージ増加率の合計になります。<br>
+
+ 敵レベル差補正とは、妖魔とのレベル差による補正値のことです。<br>
+
+ <table border=1 bordercolor=#000000 align=center cellpadding=4 cellspacing=0 width=100%>
+
+ <tr><td bgcolor=silver>レベル差</td><td>-20</td><td>～-15</td><td>～-10</td><td>～-5</td>
+
+ <td>-4～+4</td><td>+5～</td><td>+10～</td><td>+15～</td><td>+20</td></tr>
+
+ <tr><td bgcolor=silver>ペナルティ</td><td>+60%</td><td>+45%</td><td>+30%</td><td>+15%</td>
+
+ <td>0%</td><td>-15%</td><td>-30%</td><td>-45%</td><td>-60%</td></tr></table><br><br>
+
+ 決闘補正とは、決闘時にかかる補正値で、ダメージが半減します。<br>
+
+ </td></tr>
+
+ </table><br><br><br>
+
+ <table border=1 bordercolor=#000000 align=center cellpadding=4 cellspacing=0 width=600>
+
+ <tr><td>
+
+ スキル攻撃のダメージ計算式を簡素化すると、以下の式となります。<br><br>
+
+ <table border=1 bordercolor=#000000 align=center cellpadding=4 cellspacing=0 width=100% bgcolor=#EEEEEE><tr><td>
+
+ 基本ダメージ＝(Physical Attack÷Physical Defence)×(威力÷7.5)＋(Physical Attack－Physical Defence)<br>
+
+ 基本ダメージ＝(Magic Attack÷Magic Defence)×(威力÷6.25)<br><br>
+
+ ※(Physical Attack÷Physical Defence)＞7.5　ならば (Physical Attack÷Physical Defence)＝7.5<br>
+
+ 　(Magic Attack÷Magic Defence)＞6.25 ならば (Magic Attack÷Magic Defence)＝6.25<br>
+
+ 　この状態から極端にダメージが伸びなくなるため、これを｢上限ダメージ｣と呼びます。
+
+ </td></tr></table><br>
+
+ 上記の基本ダメージに様々な補正を加えたものが、最終ダメージとなります。<br>
+
+ 通常の場合、上記の式に「属性」「ダメージ増加率」などの一般的な補正値を加えることで<br>
+
+ ほとんどのスキルは、ある程度のダメージの予測を立てることができます。<br>
+
+ </td></tr>
+
+ <tr><td>
+
+ 全ての補正を加えたスキル攻撃の正確なダメージ計算は、以下の式となります。<br><br>
+
+ <table border=1 bordercolor=#000000 align=center cellpadding=4 cellspacing=0 width=100% bgcolor=#EEEEEE><tr><td>
+
+ 最終ダメージ＝{[(攻撃÷防御)×補正(A)]＋[(Physical Attack－Physical Defence)×補正(B)]}×補正(C)
+
+ </td></tr><tr><td>
+
+ 最終ダメージ＝{[(攻撃÷防御)×(威力÷定数)×増加率(A)×属性(A)]<br>
+
+ 　　　　　　　＋[(Physical Attack－Physical Defence)×増幅率×増加率(B)×属性(B)]}<br>
+
+ 　　　　　　　×職業増加率×敵レベル差補正×習得レベル差補正×職業差補正×決闘補正
+
+ </td></tr></table><br>
+
+ 上記の各補正値はスキル特性によって変化します。<br>
+
+ スキルには4つのステータスがあり、それによってスキル特性が決まります。<br>
+
+ 「分類」とは、スキルの基本威力が物理依存か法術依存かを決める要素です。<br>
+
+ 「威力」とは、スキルの基本威力を表す数値です。<br>
+
+ 「増幅率」とは、スキルのPhysical Attackの増幅率を表す数値です。<br>
+
+ 「属性」とは、スキルの属性を表す数値です。(法術系スキルにのみ設定されています)<br>
+
+ </td></tr>
+
+ <tr><td>
+
+ 補正(A)とは、基本威力とそれにかかる補正値です。<br><br>
+
+ <table border=1 bordercolor=#000000 align=center cellpadding=4 cellspacing=0 width=100% bgcolor=#EEEEEE><tr><td>
+
+ 補正(A)＝(威力÷定数)×増加率(%)×属性(%)
+
+ </td></tr></table><br>
+
+ 「分類」が「物理」の場合<br>
+
+ 定数＝7.5となり、増加率は物理系ダメージ増加率の合計になります。<br>
+
+ 属性は弱点属性の時は、キャラクターの属性＋(対象の属性÷2)になります。(最大100%)<br>
+
+ 抵抗属性の時は、100－[キャラクターの属性＋(対象の属性÷2)]になります。(最小20%)<br>
+
+ ただし妖魔の属性は基本的に1で、自分に複数属性がある場合は最も高い属性(黒字表示)になります。<br>
+
+ 「分類」が「法術」の場合<br>
+
+ 定数＝6.25となり、増加率は法術系ダメージ増加率の合計になります。<br>
+
+ 属性は弱点属性の時は、スキルの属性＋(対象の属性÷2)になります。(最大100%)<br>
+
+ 抵抗属性の時は、100－[スキルの属性＋(対象の属性÷2)]になります。(最小20%)<br>
+
+ </td></tr>
+
+ <tr><td>
+
+ 補正(B)とは、Physical AttackとPhysical Defenceの差にかかる補正値です。<br><br>
+
+ <table border=1 bordercolor=#000000 align=center cellpadding=4 cellspacing=0 width=100% bgcolor=#EEEEEE><tr><td>
+
+ 補正(B)＝増幅率(%)×増加率(%)×属性(%)<br>
+
+ </td></tr></table><br>
+
+ 増幅率とは、上記の通り、Physical Attack増幅率を表す数値です。<br>
+
+ 多くのスキルで、0%もしくは100%に設定されています。（詳しくはスキルデータベース）<br>
+
+ これが高いほどPhysical Attackの依存度が大きくなり、上限ダメージ以上のダメージが出易くなります。<br>
+
+ 増加率は物理・法術に関わらず、物理系ダメージ増加率の合計になります。<br>
+
+ 同じく属性も、属性は物理・法術に関わらず、キャラクターの属性となります。<br>
+
+ </td></tr>
+
+ <tr><td>
+
+ 補正(C)とは、基本ダメージにかかる補正値です。<br><br>
+
+ <table border=1 bordercolor=#000000 align=center cellpadding=4 cellspacing=0 width=100% bgcolor=#EEEEEE><tr><td>
+
+ 補正(C)＝職業増加率(%)×敵レベル差補正(%)×習得レベル差補正(%)×職業差補正(%)×決闘補正(%)<br>
+
+ </td></tr></table><br>
+
+ 職業増加率は、玄石・称号による職業ダメージ増加率の合計になります。<br>
+
+ 敵レベル差補正とは、妖魔とのレベル差による補正値のことです。<br>
+
+ <table border=1 bordercolor=#000000 align=center cellpadding=4 cellspacing=0 width=100%>
+
+ <tr><td bgcolor=silver>レベル差</td><td>-20</td><td>～-15</td><td>～-10</td><td>～-5</td>
+
+ <td>-4～+4</td><td>+5～</td><td>+10～</td><td>+15～</td><td>+20</td></tr>
+
+ <tr><td bgcolor=silver>ペナルティ</td><td>+60%</td><td>+45%</td><td>+30%</td><td>+15%</td>
+
+ <td>0%</td><td>-15%</td><td>-30%</td><td>-45%</td><td>-60%</td></tr></table><br><br>
+
+ 習得レベル差補正とは、他職のスキルを使用した時に<br>
+
+ その習得レベルより自分のレベルが低い場合にかかる補正値のことです。<br>
+
+ 蟲師以外の職ではレベル差が11以上の場合、レベル1毎に-5%のペナルティがかかり、<br>
+
+ 蟲師では、レベル差が1以上の場合、レベル1毎に-5%のペナルティがかかります。<br>
+
+ ペナルティの最大は-50%で、それ以上のペナルティがかかるスキルは使用できません。<br>
+
+ <table border=1 bordercolor=#000000 align=center cellpadding=4 cellspacing=0 width=100%>
+
+ <tr><td bgcolor=silver>レベル差(蟲師以外)</td><td>11</td><td>12</td><td>13</td><td>14</td><td>15</td><td>16</td><td>17</td><td>18</td><td>19</td><td>20</td></tr>
+
+ <tr><td bgcolor=silver>レベル差(蟲師)</td><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td><td>7</td><td>8</td><td>9</td><td>10</td></tr>
+
+ <tr><td bgcolor=silver>ペナルティ</td><td>-5%</td><td>-10%</td><td>-15%</td><td>-20%</td><td>-25%</td><td>-30%</td><td>-35%</td><td>-40%</td><td>-45%</td><td>-50%</td></tr>
+
+ </table><br><br>
+
+ 職業差補正とは、他職のスキルを使用した時に<br>
+
+ その職業のスキルとの相性が悪い場合にかかる補正値のことです。<br>
+
+ 下表の中で同一グループ内にある場合はペナルティなしで<br>
+
+ 同一タイプ内の場合 ペナルティ-10% 、別タイプの場合 ペナルティ-20% が<br>
+
+ 威力、再発動時間、効果時間、消費MP の全てにかかります。<br>
+
+ <table border=1 bordercolor=#000000 align=center cellpadding=4 cellspacing=0 width=100%>
+
+ <tr><td bgcolor=silver>タイプ</td><td align=center>平民</td><td colspan=2 align=center>前衛系</td><td colspan=2 align=center>後衛系</td></tr>
+
+ <tr><td bgcolor=silver>グループ</td><td align=center>平民</td><td align=center>前衛Ａ</td><td align=center>前衛Ｂ</td><td align=center>後衛Ａ</td><td align=center>後衛Ｂ</td></tr>
+
+ <tr><td bgcolor=silver>職業</td><td align=center>平民</td><td align=center>剣客<br>刀客<br>傭兵</td><td align=center>武術家<br>狩人<br>盗賊<br>商人</td><td align=center>陰陽師<br>道士<br>蟲師</td><td align=center>医者<br>楽師<br>踊り子</td></tr>
+
+ </table><br><br>
+
+ 決闘補正とは、決闘時にかかる補正値のことです。<br>
+
+ 一部の防御無視ダメージ以外の全てのダメージが半減します。<br>
+
+ </td></tr>
+
+ </table><br><br><br>
+
+
+</body></html>
